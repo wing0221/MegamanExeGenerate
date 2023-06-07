@@ -1,10 +1,32 @@
-import "../bootstrap";
 
-import ReactDOM from "react-dom/client";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Button } from '@material-ui/core'; //Buttonをインポート
 
-function App() {
-    return <h1>Hello World</h1>;
+function Example() {
+    return (
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-md-8">
+                    <div className="card">
+                        <div className="card-header">React導入できたわな</div>
+
+                        <div className="card-body">Im an example component!</div>
+                        //ボタンを追記
+  <Button color="secondary" variant="contained">ワイがMaterial-UIのボタンやな？？</Button>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
-const root = ReactDOM.createRoot(document.getElementById("app"));
-root.render(<App />);
+export default Example;
+
+if (document.getElementById('app')) {
+    ReactDOM.render(<Example />, document.getElementById('app'));
+}
+
+
