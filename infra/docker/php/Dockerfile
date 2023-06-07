@@ -1,4 +1,6 @@
 FROM php:8.1-fpm-bullseye AS base
+#追加
+EXPOSE 5173 
 
 WORKDIR /workspace
 
@@ -16,23 +18,28 @@ COPY --from=composer:2.4 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update \
   && apt-get -y install --no-install-recommends \
-    locales \
-    git \
-    unzip \
-    libzip-dev \
-    libicu-dev \
-    libonig-dev \
+  locales \
+  git \
+  unzip \
+  libzip-dev \
+  libicu-dev \
+  libonig-dev \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && locale-gen en_US.UTF-8 \
   && localedef -f UTF-8 -i en_US en_US.UTF-8 \
   && docker-php-ext-install \
-    intl \
-    pdo_mysql \
-    zip \
-    bcmath \
+  intl \
+  pdo_mysql \
+  zip \
+  bcmath \
   && composer config -g process-timeout 3600 \
   && composer config -g repos.packagist composer https://packagist.org
+
+# add npm
+RUN apt-get update
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get install -y nodejs
 
 FROM base AS development
 
